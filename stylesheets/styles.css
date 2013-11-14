@@ -68,6 +68,10 @@ header {
   padding: 15px 20px;
   border-bottom: 1px solid #B2D2E1;
 }
+header .avatar {
+  float: left;
+  margin-right: 15px;
+}
 header h1 {
   margin: 0;
   padding: 0;
