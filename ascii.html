@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+#table-container {
+  display: inline-block;
+  font-size: 12pt;
+}
+
+.val {
+  font-family: monospace;
+  display: inline-block;
+  margin: 4px 10px;
+}
+
+.row {
+  border: 1px solid #000;
+  border-bottom-width: 0px;
+}
+
+.row:hover {
+  background-color: #eee;
+  cursor: default;
+}
+
+.row:last-child {
+  border-bottom-width: 1px;
+}
+
+.row.header {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.dec {
+  color: #000080;
+}
+
+.hex {
+  color: #a00;
+}
+
+.bin {
+  color: #008000;
+}
+
+.oct {
+  color: #800080;
+}
+
+.char {
+  color: #008080;
+  font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+<div id="table-container">
+</div>
+</body>
+<script type="text/javascript">
+var container = document.getElementById("table-container");
+
+var pad = function (n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
+var makeDiv = function(cssClass, value) {
+  var div = document.createElement("div");
+  div.className = "val " + cssClass;
+  //div.appendChild(document.createTextNode(value));
+  div.innerHTML = value;
+  return div;
+};
+
+// initialize charMap
+var charMap = [];
+for(var i = 0; i < 128; i++) {
+  charMap.push(String.fromCharCode(i));
+}
+
+// replace special characters with text descriptions
+charMap[0]   = "<i>[NUL]</i>";
+charMap[1]   = "<i>[SOH]</i>";
+charMap[2]   = "<i>[STX]</i>";
+charMap[3]   = "<i>[ETX]</i>";
+charMap[4]   = "<i>[EOT]</i>";
+charMap[5]   = "<i>[ENO]</i>";
+charMap[6]   = "<i>[ACK]</i>";
+charMap[7]   = "<i>[BEL]</i>";
+charMap[8]   = "<i>[BS]</i>";
+charMap[9]   = "<i>[HTAB]</i>";
+charMap[10]  = "<i>[LF]</i>";
+charMap[11]  = "<i>[VTAB]</i>";
+charMap[12]  = "<i>[FF]</i>";
+charMap[13]  = "<i>[CR]</i>";
+charMap[14]  = "<i>[SO]</i>";
+charMap[15]  = "<i>[SI]</i>";
+charMap[16]  = "<i>[DLF]</i>";
+charMap[17]  = "<i>[DC1]</i>";
+charMap[18]  = "<i>[DC2]</i>";
+charMap[19]  = "<i>[DC3]</i>";
+charMap[20]  = "<i>[DC4]</i>";
+charMap[21]  = "<i>[NAK]</i>";
+charMap[22]  = "<i>[SYN]</i>";
+charMap[23]  = "<i>[ETB]</i>";
+charMap[24]  = "<i>[CAN]</i>";
+charMap[25]  = "<i>[EM]</i>";
+charMap[26]  = "<i>[SUB]</i>";
+charMap[27]  = "<i>[ESC]</i>";
+charMap[28]  = "<i>[FS]</i>";
+charMap[29]  = "<i>[GS]</i>";
+charMap[30]  = "<i>[RS]</i>";
+charMap[31]  = "<i>[US]</i>";
+charMap[32]  = "<i>[SPACE]</i>";
+charMap[127] = "<i>[DEL]</i>";
+
+// header row
+{
+  var row = document.createElement("div");
+  row.className += " row header";
+
+  row.appendChild(makeDiv("dec", "Dec"));
+  row.appendChild(makeDiv("hex", "Hex&nbsp;"));
+  row.appendChild(makeDiv("oct", "Oct&nbsp;"));
+  row.appendChild(makeDiv("bin", "Binary&nbsp;&nbsp;"));
+  row.appendChild(makeDiv("char","Char"));
+  
+  container.appendChild(row);
+}
+
+for(var i = 0; i < 128; i++) {
+
+  var row = document.createElement("div");
+  row.className += " row";
+
+  row.appendChild(makeDiv("dec", pad(i, 3, "&nbsp;")));
+  row.appendChild(makeDiv("hex", "0x" + pad(i.toString(16).toUpperCase(), 2)));
+  row.appendChild(makeDiv("oct", "\\" + pad(i.toString(8), 3)));
+  row.appendChild(makeDiv("bin", pad(i.toString(2), 8)));
+  row.appendChild(makeDiv("char", charMap[i]));
+  
+  container.appendChild(row);
+}
+
+</script>
+</html>
